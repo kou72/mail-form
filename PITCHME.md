@@ -7,7 +7,7 @@
 ---
 
 @snap[north]
-@size[1.5em]@color[#FF3B00](タイトル)
+@size[2.0em]@color[#FF3B00](タイトル)
 @snapend
 
 ---
