@@ -15,28 +15,25 @@ const smtp = nodemailer.createTransport({
   }
 });
 
-exports.echo = functions.https.onCall((data, context) => {
-  return "name=" + data.name + ", email=" + data.email + ", message=" + data.message;
-});
+// メールフォーマット
+const inquiry = data => {
+  return `以下内容でホームページよりお問い合わせを受けました。
 
-exports.hello = functions.https.onCall((data, context) => {
-  return "hello";
+【お名前】
+${data.name}
+
+【メールアドレス】
+${data.email}
+
+【内容】
+${data.message}`;
+};
+
+exports.helloWorld = functions.https.onRequest((request, response) => {
+  response.send("Hello from Firebase!");
 });
 
 exports.sendMail = functions.https.onCall(async (data, context) => {
-  // メールフォーマット
-  const inquiry = data => {
-    return `以下内容でホームページよりお問い合わせを受けました。
-
-お名前：${data.name}
-
-メールアドレス：${data.email}
-
-内容：
-${data.message}
-`;
-  };
-
   //メール情報の作成
   const contents = {
     from: gmailEmail,
@@ -51,5 +48,22 @@ ${data.message}
   } catch (err) {
     console.error(`send failed. ${err}`);
     throw new functions.https.HttpsError("internal", "send failed.");
+  }
+});
+
+exports.storeMail = functions.firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {
+  //メール情報の作成
+  const contents = {
+    from: gmailEmail,
+    to: gmailEmail,
+    subject: "お問合せフォームからのメッセージ",
+    text: inquiry(snap.data())
+  };
+
+  // メール送付
+  try {
+    smtp.sendMail(contents);
+  } catch (err) {
+    console.error(`send failed. ${err}`);
   }
 });
