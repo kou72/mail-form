@@ -7,13 +7,16 @@ function MailForm() {
   this.nameInput = document.getElementById("name");
   this.emailInput = document.getElementById("email");
   this.messageInput = document.getElementById("message");
-  this.sendButton = document.getElementById("send");
-  this.saveButton = document.getElementById("save");
   this.snackbar = document.getElementById("snackbar");
 
-  // Button Events.
+  // Sned Button Events.
+  this.sendButton = document.getElementById("send");
   this.sendButton.addEventListener("click", this.sendMessage.bind(this));
-  this.saveButton.addEventListener("click", this.saveMessage.bind(this));
+
+  // TODO.14-3
+  // Save Button Events.
+  // this.saveButton = document.getElementById("save");
+  // this.saveButton.addEventListener("click", this.saveMessage.bind(this));
 
   // Toggle for the button.
   const buttonTogglingHandler = this.toggleButton.bind(this);
@@ -25,50 +28,52 @@ function MailForm() {
   this.messageInput.addEventListener("keyup", buttonTogglingHandler);
 }
 
-////TODO
 // send mail
-// MailForm.prototype.sendMessage = async function(e) {
-//   e.preventDefault();
-//   const data = {
-//     name: this.nameInput.value,
-//     email: this.emailInput.value,
-//     message: this.messageInput.value
-//   };
-//   try {
-//     await firebase.functions().httpsCallable("sendMail")(data);
-//     this.successSnackbar();
-//     this.resetForm();
-//   } catch {
-//     this.errorSnackbar();
-//   }
-// };
+MailForm.prototype.sendMessage = async function(e) {
+  //TODO.10-2
+  e.preventDefault();
+  const data = {
+    name: this.nameInput.value,
+    email: this.emailInput.value,
+    message: this.messageInput.value
+  };
+  try {
+    await firebase.functions().httpsCallable("sendMail")(data);
+    this.successSnackbar();
+    this.resetForm();
+  } catch {
+    this.errorSnackbar();
+  }
+};
 
-////TODO
+//TODO.14-4
 // save & send mail
-// MailForm.prototype.saveMessage = async function(e) {
-//   e.preventDefault();
-//   const ref = firebase.firestore().collection("mailForm");
-//   try {
-//     await ref.add({
-//       name: this.nameInput.value,
-//       email: this.emailInput.value,
-//       message: this.messageInput.value,
-//       timestamp: new Date()
-//     });
-//     this.successSnackbar();
-//     this.resetForm();
-//   } catch {
-//     this.errorSnackbar();
-//   }
-// };
+MailForm.prototype.saveMessage = async function(e) {
+  //   e.preventDefault();
+  //   const ref = firebase.firestore().collection("mailForm");
+  //   try {
+  //     await ref.add({
+  //       name: this.nameInput.value,
+  //       email: this.emailInput.value,
+  //       message: this.messageInput.value,
+  //       timestamp: new Date()
+  //     });
+  //     this.successSnackbar();
+  //     this.resetForm();
+  //   } catch {
+  //     this.errorSnackbar();
+  //   }
+};
 
 MailForm.prototype.toggleButton = function() {
   if (this.nameInput.value && this.emailInput.value && this.messageInput.value) {
     this.sendButton.removeAttribute("disabled");
-    this.saveButton.removeAttribute("disabled");
+    // TODO.14-5
+    // this.saveButton.removeAttribute("disabled");
   } else {
     this.sendButton.setAttribute("disabled", "true");
-    this.saveButton.setAttribute("disabled", "true");
+    // TODO.14-6
+    // this.saveButton.setAttribute("disabled", "true");
   }
 };
 
