@@ -16,29 +16,40 @@ const smtp = nodemailer.createTransport({
 });
 
 exports.echo = functions.https.onCall((data, context) => {
-  return data.text;
+  return "name=" + data.name + ", email=" + data.email + ", message=" + data.message;
 });
 
 exports.hello = functions.https.onCall((data, context) => {
   return "hello";
 });
 
-// Sending the request
-exports.sendMail = functions.https.onCall((data, context) => {
+exports.sendMail = functions.https.onCall(async (data, context) => {
+  // メールフォーマット
+  const inquiry = data => {
+    return `以下内容でホームページよりお問い合わせを受けました。
+
+お名前：${data.name}
+
+メールアドレス：${data.email}
+
+内容：
+${data.message}
+`;
+  };
+
   //メール情報の作成
-  const message = {
+  const contents = {
     from: gmailEmail,
     to: gmailEmail,
-    subject: "nodemailer test mail",
-    text: "テストメールです。"
+    subject: "お問合せフォームからのメッセージ",
+    text: inquiry(data)
   };
 
   // メール送付
-  smtp.sendMail(message, (err, info) => {
-    if (err) {
-      return err;
-    } else {
-      return "success!";
-    }
-  });
+  try {
+    smtp.sendMail(contents);
+  } catch (err) {
+    console.error(`send failed. ${err}`);
+    throw new functions.https.HttpsError("internal", "send failed.");
+  }
 });
