@@ -25,40 +25,42 @@ function MailForm() {
   this.messageInput.addEventListener("keyup", buttonTogglingHandler);
 }
 
+////TODO
 // send mail
-MailForm.prototype.sendMessage = async function(e) {
-  e.preventDefault();
-  const data = {
-    name: this.nameInput.value,
-    email: this.emailInput.value,
-    message: this.messageInput.value
-  };
-  try {
-    await firebase.functions().httpsCallable("sendMail")(data);
-    this.successSnackbar();
-    this.resetForm();
-  } catch {
-    this.errorSnackbar();
-  }
-};
+// MailForm.prototype.sendMessage = async function(e) {
+//   e.preventDefault();
+//   const data = {
+//     name: this.nameInput.value,
+//     email: this.emailInput.value,
+//     message: this.messageInput.value
+//   };
+//   try {
+//     await firebase.functions().httpsCallable("sendMail")(data);
+//     this.successSnackbar();
+//     this.resetForm();
+//   } catch {
+//     this.errorSnackbar();
+//   }
+// };
 
+////TODO
 // save & send mail
-MailForm.prototype.saveMessage = async function(e) {
-  e.preventDefault();
-  const ref = firebase.firestore().collection("mailForm");
-  try {
-    await ref.add({
-      name: this.nameInput.value,
-      email: this.emailInput.value,
-      message: this.messageInput.value,
-      timestamp: new Date()
-    });
-    this.successSnackbar();
-    this.resetForm();
-  } catch {
-    this.errorSnackbar();
-  }
-};
+// MailForm.prototype.saveMessage = async function(e) {
+//   e.preventDefault();
+//   const ref = firebase.firestore().collection("mailForm");
+//   try {
+//     await ref.add({
+//       name: this.nameInput.value,
+//       email: this.emailInput.value,
+//       message: this.messageInput.value,
+//       timestamp: new Date()
+//     });
+//     this.successSnackbar();
+//     this.resetForm();
+//   } catch {
+//     this.errorSnackbar();
+//   }
+// };
 
 MailForm.prototype.toggleButton = function() {
   if (this.nameInput.value && this.emailInput.value && this.messageInput.value) {

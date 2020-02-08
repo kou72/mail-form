@@ -6,6 +6,11 @@ const gmailPassword = functions.config().gmail.password;
 
 admin.initializeApp();
 
+// TODO
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   response.send("Hello from Firebase!");
+// });
+
 //SMTPサーバの設定
 const smtp = nodemailer.createTransport({
   service: "gmail",
@@ -29,41 +34,39 @@ ${data.email}
 ${data.message}`;
 };
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
+// TODO
+//exports.sendMail = functions.https.onCall(async (data, context) => {
+//  //メール情報の作成
+//  const contents = {
+//    from: gmailEmail,
+//    to: gmailEmail,
+//    subject: "お問合せフォームからのメッセージ",
+//    text: inquiry(data)
+//  };
 
-exports.sendMail = functions.https.onCall(async (data, context) => {
-  //メール情報の作成
-  const contents = {
-    from: gmailEmail,
-    to: gmailEmail,
-    subject: "お問合せフォームからのメッセージ",
-    text: inquiry(data)
-  };
+//  // メール送付
+//  try {
+//    smtp.sendMail(contents);
+//  } catch (err) {
+//    console.error(`send failed. ${err}`);
+//    throw new functions.https.HttpsError("internal", "send failed.");
+//  }
+//});
 
-  // メール送付
-  try {
-    smtp.sendMail(contents);
-  } catch (err) {
-    console.error(`send failed. ${err}`);
-    throw new functions.https.HttpsError("internal", "send failed.");
-  }
-});
+// TODO
+//exports.storeMail = functions.firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {
+//  //メール情報の作成
+//  const contents = {
+//    from: gmailEmail,
+//    to: gmailEmail,
+//    subject: "お問合せフォームからのメッセージ",
+//    text: inquiry(snap.data())
+//  };
 
-exports.storeMail = functions.firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {
-  //メール情報の作成
-  const contents = {
-    from: gmailEmail,
-    to: gmailEmail,
-    subject: "お問合せフォームからのメッセージ",
-    text: inquiry(snap.data())
-  };
-
-  // メール送付
-  try {
-    smtp.sendMail(contents);
-  } catch (err) {
-    console.error(`send failed. ${err}`);
-  }
-});
+//  // メール送付
+//  try {
+//    smtp.sendMail(contents);
+//  } catch (err) {
+//    console.error(`send failed. ${err}`);
+//  }
+//});
