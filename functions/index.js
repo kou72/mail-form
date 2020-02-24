@@ -7,7 +7,7 @@ const gmailPassword = functions.config().gmail.password;
 admin.initializeApp();
 
 // TODO.07
-// exports.helloWorld = functions.https.onRequest((request, response) => {
+// exports.helloWorld = functions.region('asia-northeast1').https.onRequest((request, response) => {
 //   response.send("Hello from Firebase!");
 //   console.log("console messages");
 // });
@@ -36,7 +36,7 @@ ${data.message}`;
 };
 
 // TODO.10-1
-//exports.sendMail = functions.https.onCall(async (data, context) => {
+// exports.sendMail = functions.region('asia-northeast1').https.onCall(async (data, context) => {
 //  //メール情報の作成
 //  const contents = {
 //    from: gmailEmail,
@@ -55,7 +55,7 @@ ${data.message}`;
 //});
 
 // TODO.14-1
-//exports.storeMail = functions.firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {
+//exports.storeMail = functions.region('asia-northeast1').firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {
 //  //メール情報の作成
 //  const contents = {
 //    from: gmailEmail,
