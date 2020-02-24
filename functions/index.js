@@ -7,10 +7,10 @@ const gmailPassword = functions.config().gmail.password;
 admin.initializeApp();
 
 // TODO.07
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-  console.log("console messages");
-});
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   response.send("Hello from Firebase!");
+//   console.log("console messages");
+// });
 
 //SMTPサーバの設定
 const smtp = nodemailer.createTransport({
@@ -36,23 +36,23 @@ ${data.message}`;
 };
 
 // TODO.10-1
-exports.sendMail = functions.https.onCall(async (data, context) => {
-  //メール情報の作成
-  const contents = {
-    from: gmailEmail,
-    to: gmailEmail,
-    subject: "お問合せフォームからのメッセージ",
-    text: inquiry(data)
-  };
+//exports.sendMail = functions.https.onCall(async (data, context) => {
+//  //メール情報の作成
+//  const contents = {
+//    from: gmailEmail,
+//    to: gmailEmail,
+//    subject: "お問合せフォームからのメッセージ",
+//    text: inquiry(data)
+//  };
 
-  // メール送付
-  try {
-    smtp.sendMail(contents);
-  } catch (err) {
-    console.error(`send failed. ${err}`);
-    throw new functions.https.HttpsError("internal", "send failed.");
-  }
-});
+//  // メール送付
+//  try {
+//    smtp.sendMail(contents);
+//  } catch (err) {
+//    console.error(`send failed. ${err}`);
+//    throw new functions.https.HttpsError("internal", "send failed.");
+//  }
+//});
 
 // TODO.14-1
 //exports.storeMail = functions.firestore.document("mailForm/{Id}").onCreate(async (snap, context) => {

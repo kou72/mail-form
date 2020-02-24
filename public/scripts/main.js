@@ -9,16 +9,16 @@ function MailForm() {
   this.messageInput = document.getElementById("message");
   this.snackbar = document.getElementById("snackbar");
 
-  // Sned Button Events.
+  // メール送信ボタン
   this.sendButton = document.getElementById("send");
   this.sendButton.addEventListener("click", this.sendMessage.bind(this));
 
   // TODO.14-3
-  // Save Button Events.
+  // メール保存&送信ボタン
   // this.saveButton = document.getElementById("save");
   // this.saveButton.addEventListener("click", this.saveMessage.bind(this));
 
-  // Toggle for the button.
+  // ボタン表示・非表示
   const buttonTogglingHandler = this.toggleButton.bind(this);
   this.nameInput.addEventListener("change", buttonTogglingHandler);
   this.nameInput.addEventListener("keyup", buttonTogglingHandler);
@@ -28,26 +28,26 @@ function MailForm() {
   this.messageInput.addEventListener("keyup", buttonTogglingHandler);
 }
 
-// send mail
+// メール送付
 MailForm.prototype.sendMessage = async function(e) {
   //TODO.10-2
-  e.preventDefault();
-  const data = {
-    name: this.nameInput.value,
-    email: this.emailInput.value,
-    message: this.messageInput.value
-  };
-  try {
-    await firebase.functions().httpsCallable("sendMail")(data);
-    this.successSnackbar();
-    this.resetForm();
-  } catch {
-    this.errorSnackbar();
-  }
+  // e.preventDefault();
+  // const data = {
+  //   name: this.nameInput.value,
+  //   email: this.emailInput.value,
+  //   message: this.messageInput.value
+  // };
+  // try {
+  //   await firebase.functions().httpsCallable("sendMail")(data);
+  //   this.successSnackbar();
+  //   this.resetForm();
+  // } catch {
+  //   this.errorSnackbar();
+  // }
 };
 
 //TODO.14-4
-// save & send mail
+// メール保存&送付
 MailForm.prototype.saveMessage = async function(e) {
   //   e.preventDefault();
   //   const ref = firebase.firestore().collection("mailForm");
