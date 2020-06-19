@@ -13,7 +13,7 @@ function MailForm() {
   this.sendButton = document.getElementById("send");
   this.sendButton.addEventListener("click", this.sendMessage.bind(this));
 
-  // TODO.14-3
+  // TODO.17-3
   // メール保存&送信ボタン
   // this.saveButton = document.getElementById("save");
   // this.saveButton.addEventListener("click", this.saveMessage.bind(this));
@@ -30,25 +30,25 @@ function MailForm() {
 
 // メール送付
 MailForm.prototype.sendMessage = async function (e) {
-  //TODO.10-2
-  e.preventDefault();
-  const data = {
-    name: this.nameInput.value,
-    email: this.emailInput.value,
-    message: this.messageInput.value,
-  };
-  try {
-    await firebase.functions().httpsCallable("sendMail")(data);
-    this.successSnackbar();
-    this.resetForm();
-  } catch {
-    this.errorSnackbar();
-  }
+  //TODO.15-2
+  // e.preventDefault();
+  // const data = {
+  //   name: this.nameInput.value,
+  //   email: this.emailInput.value,
+  //   message: this.messageInput.value,
+  // };
+  // try {
+  //   await firebase.functions().httpsCallable("sendMail")(data);
+  //   this.successSnackbar();
+  //   this.resetForm();
+  // } catch {
+  //   this.errorSnackbar();
+  // }
 };
 
-//TODO.14-4
 // メール保存&送付
 MailForm.prototype.saveMessage = async function (e) {
+  //TODO.17-4
   //   e.preventDefault();
   //   const ref = firebase.firestore().collection("mailForm");
   //   try {
@@ -68,11 +68,11 @@ MailForm.prototype.saveMessage = async function (e) {
 MailForm.prototype.toggleButton = function () {
   if (this.nameInput.value && this.emailInput.value && this.messageInput.value) {
     this.sendButton.removeAttribute("disabled");
-    // TODO.14-5
+    // TODO.17-5
     // this.saveButton.removeAttribute("disabled");
   } else {
     this.sendButton.setAttribute("disabled", "true");
-    // TODO.14-6
+    // TODO.17-6
     // this.saveButton.setAttribute("disabled", "true");
   }
 };
