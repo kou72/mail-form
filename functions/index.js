@@ -1,8 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
-const gmailEmail = functions.config().gmail.email;
-const gmailPassword = functions.config().gmail.password;
+const address = functions.config().gmail.address;
+const { google } = require("googleapis");
 
 admin.initializeApp();
 
@@ -13,27 +12,27 @@ admin.initializeApp();
 // });
 
 //SMTPサーバの設定
-const smtp = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: gmailEmail,
-    pass: gmailPassword
-  }
-});
+// const smtp = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: gmailEmail,
+//     pass: gmailPassword,
+//   },
+// });
 
 // メールフォーマット
-const inquiry = data => {
-  return `以下内容でホームページよりお問い合わせを受けました。
+// const inquiry = (data) => {
+//   return `以下内容でホームページよりお問い合わせを受けました。
 
-【お名前】
-${data.name}
+// 【お名前】
+// ${data.name}
 
-【メールアドレス】
-${data.email}
+// 【メールアドレス】
+// ${data.email}
 
-【内容】
-${data.message}`;
-};
+// 【内容】
+// ${data.message}`;
+// };
 
 // TODO.10-1
 // exports.sendMail = functions.https.onCall(async (data, context) => {
@@ -71,3 +70,39 @@ ${data.message}`;
 //    console.error(`send failed. ${err}`);
 //  }
 //});
+
+const credentialsJson = require("./credentials.json");
+const tokenJson = require("./token.json");
+const createAuth = (credentials, token) => {
+  const { client_secret, client_id, redirect_uris } = credentials.installed;
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  oAuth2Client.setCredentials(token);
+  return oAuth2Client;
+};
+
+exports.sendMail = functions.https.onRequest((request, response) => {
+  const auth = createAuth(credentialsJson, tokenJson);
+  const gmail = google.gmail({ version: "v1", auth });
+  const email = [
+    `Content-Type: text/plain; charset=\"UTF-8\"\n`,
+    `MIME-Version: 1.0\n`,
+    `Content-Transfer-Encoding: 7bit\n`,
+    `to: ${address} \n`,
+    `subject: test \n\n`,
+    `test massage`,
+  ].join("");
+  const base64EncodedEmail = new Buffer(email).toString("base64").replace(/\+/g, "-").replace(/\//g, "_");
+  gmail.users.messages.send(
+    {
+      userId: "me",
+      resource: {
+        raw: base64EncodedEmail,
+      },
+    },
+    (err, res) => {
+      if (err) return console.log("The API returned an error: " + err);
+      console.log(res.data);
+      response.send("send mail!");
+    }
+  );
+});
