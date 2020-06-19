@@ -25,37 +25,41 @@
 
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mail-form-card mdl-card mdl-shadow--6dp">
-          <!-- card title -->
+          <!-- カードタイトル -->
           <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
             <i class="material-icons">mail_outline</i>
             <h2 class="mdl-card__title-text">お問い合わせ</h2>
           </div>
-          <!-- card body -->
+          <!-- カードボディ -->
           <div class="mdl-card__supporting-text">
             <form action="#">
-              <!-- name form -->
+              <!-- nameフォーム -->
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input id="name" type="text" class="mdl-textfield__input" />
                 <label class="mdl-textfield__label" for="name">name...</label>
               </div>
-              <!-- email form -->
+              <!-- emailフォーム -->
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input id="email" class="mdl-textfield__input" type="text" />
                 <label class="mdl-textfield__label" for="email">email...</label>
               </div>
-              <!-- message form -->
+              <!-- messageフォーム -->
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <textarea id="message" class="mdl-textfield__input" rows="4"></textarea>
                 <label class="mdl-textfield__label" for="message">Message...</label>
               </div>
-              <!-- send button -->
+              <!-- 送信ボタン -->
               <div class="mdl-card__actions">
-                <button id="send" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary mdl-color-text--white">
+                <button
+                  id="send"
+                  disabled
+                  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary mdl-color-text--white"
+                >
                   Send
                 </button>
               </div>
-              <!-- TODO.14-2 -->
-              <!-- 保存&送信ボタン -->
+              <!-- TODO.17-2 -->
+              <!-- <!-1- 保存&送信ボタン -1-> -->
               <!-- <div class="mdl-card__actions"> -->
               <!--   <button id="save" disabled class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color-text--white"> -->
               <!--     Save & Send -->
@@ -73,14 +77,14 @@
     </div>
 
     <!-- TODO.04 -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <!-1- The core Firebase JS SDK is always required and must be listed first -1-> -->
     <!-- <script src="/__/firebase/6.2.0/firebase-app.js"></script> -->
 
-    <!-- Add SDKs for Firebase products that you want to use -->
+    <!-- <!-1- Add SDKs for Firebase products that you want to use -1-> -->
     <!-- <script src="/__/firebase/6.2.0/firebase-functions.js"></script> -->
     <!-- <script src="/__/firebase/6.2.0/firebase-firestore.js"></script> -->
 
-    <!-- Initialize Firebase -->
+    <!-- <!-1- Initialize Firebase -1-> -->
     <!-- <script src="/__/firebase/init.js"></script> -->
 
     <script src="scripts/main.js"></script>
