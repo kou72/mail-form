@@ -29,26 +29,26 @@ function MailForm() {
 }
 
 // メール送付
-MailForm.prototype.sendMessage = async function(e) {
+MailForm.prototype.sendMessage = async function (e) {
   //TODO.10-2
-  // e.preventDefault();
-  // const data = {
-  //   name: this.nameInput.value,
-  //   email: this.emailInput.value,
-  //   message: this.messageInput.value
-  // };
-  // try {
-  //   await firebase.functions().httpsCallable("sendMail")(data);
-  //   this.successSnackbar();
-  //   this.resetForm();
-  // } catch {
-  //   this.errorSnackbar();
-  // }
+  e.preventDefault();
+  const data = {
+    name: this.nameInput.value,
+    email: this.emailInput.value,
+    message: this.messageInput.value,
+  };
+  try {
+    await firebase.functions().httpsCallable("sendMail")(data);
+    this.successSnackbar();
+    this.resetForm();
+  } catch {
+    this.errorSnackbar();
+  }
 };
 
 //TODO.14-4
 // メール保存&送付
-MailForm.prototype.saveMessage = async function(e) {
+MailForm.prototype.saveMessage = async function (e) {
   //   e.preventDefault();
   //   const ref = firebase.firestore().collection("mailForm");
   //   try {
@@ -65,7 +65,7 @@ MailForm.prototype.saveMessage = async function(e) {
   //   }
 };
 
-MailForm.prototype.toggleButton = function() {
+MailForm.prototype.toggleButton = function () {
   if (this.nameInput.value && this.emailInput.value && this.messageInput.value) {
     this.sendButton.removeAttribute("disabled");
     // TODO.14-5
@@ -77,24 +77,24 @@ MailForm.prototype.toggleButton = function() {
   }
 };
 
-MailForm.prototype.resetForm = function() {
+MailForm.prototype.resetForm = function () {
   this.nameInput.value = "";
   this.emailInput.value = "";
   this.messageInput.value = "";
   this.toggleButton();
 };
 
-MailForm.prototype.successSnackbar = function() {
+MailForm.prototype.successSnackbar = function () {
   this.snackbar.style.backgroundColor = "#2196f3";
   this.snackbar.MaterialSnackbar.showSnackbar({ message: "送信に成功しました" });
 };
 
-MailForm.prototype.errorSnackbar = function() {
+MailForm.prototype.errorSnackbar = function () {
   this.snackbar.style.backgroundColor = "#f44336";
   this.snackbar.MaterialSnackbar.showSnackbar({ message: "送信に失敗しました" });
 };
 
-window.onload = function() {
+window.onload = function () {
   // Initializes MailForm.
   window.mailForm = new MailForm();
 };
