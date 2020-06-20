@@ -1,6 +1,5 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const toAddress = functions.config().to.address;
 const { google } = require("googleapis");
 
 admin.initializeApp();
@@ -47,7 +46,8 @@ const createEmail = (data) => {
 };
 
 // TODO.15-1
-// // json ファイル読み込み
+// // 環境変数、json ファイル読み込み
+// const toAddress = functions.config().to.address;
 // const credentialsJson = require("./credentials.json");
 // const tokenJson = require("./token.json");
 
